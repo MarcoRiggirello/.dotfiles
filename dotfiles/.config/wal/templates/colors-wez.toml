@@ -1,9 +1,9 @@
 [colors]
 foreground = "{foreground}"
 background = "{background}"
-cursor_bg = "{background}"
+cursor_bg = "{cursor}"
 cursor_border = "{cursor}"
-cursor_fg = "{cursor}"
+cursor_fg = "{background}"
 selection_bg = "{foreground}"
 selection_fg = "{background}"
 
