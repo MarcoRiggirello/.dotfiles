@@ -1,10 +1,10 @@
 local wezterm = require 'wezterm';
-local home = os.getenv("HOME")
+local HOME = os.getenv("HOME")
 return {
   font = wezterm.font("Iosevka Slab"),
-  font_size = 14.0,
-  color_scheme_dirs = {"/.cache/wal/"},
-  color_scheme = "colors",
+  font_size = 16.0,
+  color_scheme = "colors-wez",
+  color_scheme_dirs = {HOME.."/.cache/wal/"},
   hide_tab_bar_if_only_one_tab = true,
 }
 
