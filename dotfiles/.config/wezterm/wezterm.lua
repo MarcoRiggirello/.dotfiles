@@ -10,5 +10,10 @@ return {
     -- Default ones do not work in italian keyboard.
     {key="s", mods="CTRL|ALT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
     {key="s", mods="CTRL|ALT|SHIFT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+    -- Vi style navigation.
+    {key="h", mods="SUPER|SHIFT", action=wezterm.action{ActivatePaneDirection="Left"}},
+    {key="j", mods="SUPER|SHIFT", action=wezterm.action{ActivatePaneDirection="Down"}},
+    {key="k", mods="SUPER|SHIFT", action=wezterm.action{ActivatePaneDirection="Up"}},
+    {key="l", mods="SUPER|SHIFT", action=wezterm.action{ActivatePaneDirection="Right"}},
   }
 }
