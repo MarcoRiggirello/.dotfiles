@@ -18,6 +18,9 @@ promptinit
 
 prompt redhat
 
+export EDITOR=nvim
+export VISUAL=$EDITOR
+
 if [ -f /usr/share/nnn/quitcd/quitcd.bash_zsh ]; then
     source /usr/share/nnn/quitcd/quitcd.bash_zsh
 fi
