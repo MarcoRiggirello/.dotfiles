@@ -1,5 +1,4 @@
 local o = vim.o
-local bo = vim.bo
 local fn = vim.fn
 local wo = vim.wo
 local cmd = vim.cmd
@@ -16,6 +15,8 @@ require('packer').startup(function()
 
   use { 'AlphaTechnolog/pywal.nvim' }
   use { 'nvim-lualine/lualine.nvim' }
+
+  use { "luukvbaal/nnn.nvim" }
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
@@ -59,6 +60,8 @@ require('lualine').setup {
   },
 }
 
+require("nnn").setup()
+
 require('nvim-treesitter.configs').setup {
   ensure_installed = { 'bibtex', 'c', 'cpp', 'julia', 'latex', 'lua', 'python' },
   highlight = {
@@ -77,6 +80,13 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 }
+
+local lsp_installer = require("nvim-lsp-installer")
+
+lsp_installer.on_server_ready(function(server)
+    local opts = {}
+    server:setup(opts)
+end)
 
 -- LSP settings
 local lspconfig = require 'lspconfig'
@@ -102,8 +112,8 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'pyright', 'julials', 'texlab' }
-for _, lsp in ipairs(servers) do
+local servers = { 'clangd', 'julials', 'pyright', 'sumneko_lua', 'texlab' }
+for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
