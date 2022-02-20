@@ -17,8 +17,7 @@ require('packer').startup(function()
   use { 'AlphaTechnolog/pywal.nvim' }
   use { 'nvim-lualine/lualine.nvim' }
 
-  use { 'nvim-treesitter/nvim-treesitter' }
-  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
   use { 'neovim/nvim-lspconfig' }
   use { 'williamboman/nvim-lsp-installer' }
@@ -59,9 +58,9 @@ require('lualine').setup {
     section_separators = '',
   },
 }
--- Treesitter configuration
--- Parsers must be installed manually via :TSInstall
+
 require('nvim-treesitter.configs').setup {
+  ensure_installed = { 'bibtex', 'c', 'cpp', 'julia', 'latex', 'lua', 'python' },
   highlight = {
     enable = true, -- false will disable the whole extension
   },
@@ -76,39 +75,6 @@ require('nvim-treesitter.configs').setup {
   },
   indent = {
     enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
   },
 }
 
@@ -128,7 +94,7 @@ local on_attach = function(_, bufnr)
   map(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   map(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+  cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -166,24 +132,6 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end,
   },
   sources = {
     { name = 'nvim_lsp' },
