@@ -32,3 +32,10 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 alias anaconda='source .zshrc.conda'
+
+# CERN related stuff
+
+source /opt/Xilinx/Vivado/2020.1/settings64.sh
+
+export PATH=/opt/cactus/bin/uhal/tools:$PATH LD_LIBRARY_PATH=/opt/cactus/lib:$LD_LIBRARY_PATH
+
